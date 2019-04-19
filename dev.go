@@ -9,7 +9,6 @@ import (
 	"runtime"
 
 	"github.com/zserge/lorca"
-	"github.com/mitchellh/go-homedir"
 )
 
 func main() {
@@ -24,18 +23,7 @@ func main() {
 	defer ui.Close()
 
 	ui.Load("http://localhost:3000")
-
-	home, err := homedir.Dir()
-	if err != nil {
-		log.Fatal(err)
-	}
-	ui.Bind("profiles", func() []string {
-		cr := os.Getenv("AWS_SHARED_CREDENTIALS_FILE")
-		if cr != "" {
-			log.Fatalf("Error: %s", home)
-		}
-		return []string{}
-	})
+	bind(ui)
 
 	sigc := make(chan os.Signal)
 	signal.Notify(sigc, os.Interrupt)

@@ -60,6 +60,7 @@ func main() {
 	go http.Serve(ln, http.FileServer(FS))
 	log.Println(fmt.Sprintf("http://%v", ln.Addr()))
 	ui.Load(fmt.Sprintf("http://%s", ln.Addr()))
+	bind(ui)
 
 	// Wait until the interrupt signal arrives or browser window is closed
 	sigc := make(chan os.Signal)
